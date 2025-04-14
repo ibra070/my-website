@@ -308,114 +308,50 @@
                 <li><a href="about.html">عني</a></li>
                 <li><a href="portfolio.html">أعمالي</a></li>
                 <li><a href="blog.html">المدونة</a></li>
-                <li><a href="contact.html">اتصل بي</a></li>
-                <li class="social-links">
-                    <a href="https://github.com/ibra070" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://twitter.com/YOUR_TWITTER_HANDLE" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/?locale=ar_AR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://wa.me/967778830856" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://t.me/ibrah_070" title="Telegram"><i class="fab fa-telegram"></i></a>
-                    <a href="mailto:alnamisibrahem@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <li><a href="contact.html">اتصل
                 </li>
             </ul>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </nav>
 
     <!-- المحتوى الرئيسي -->
-    <main class="main-content">
+    <div class="main-content">
         <section class="hero-section">
-            <h1>مرحباً بك في صفحتي الشخصية</h1>
-            <p>مكان لمشاركة رحلتي، أهدافي، وإنجازاتي</p>
+            <h1>مرحبًا بك في موقعي!</h1>
+            <p>نحن نقدم مجموعة متنوعة من الخدمات المتخصصة في التصميم والتطوير والتسويق. استكشف خدماتنا للحصول على أفضل الحلول الرقمية.</p>
         </section>
-        
-        <div id="content-container"></div>
-    </main>
+
+        <h2>خدماتنا:</h2>
+        <ul class="services-menu">
+            <li>التصميم الجرافيكي</li>
+            <li>التسويق الرقمي</li>
+            <li>تطوير الويب</li>
+        </ul>
+    </div>
 
     <!-- أزرار الاتصال للجوّال -->
     <div class="contact-buttons">
-        <a href="tel:+YOUR_PHONE" class="contact-button">
-            <i class="fas fa-phone"></i>
-            <span>اتصال</span>
+        <a href="tel:+1234567890" class="contact-button">
+            <i class="fas fa-phone-alt"></i>
+            <span>اتصل بنا</span>
         </a>
-        <a href="https://wa.me/967778830856" class="contact-button">
-            <i class="fab fa-whatsapp"></i>
-            <span>واتساب</span>
-        </a>
-        <a href="mailto:alnamisibrahem@gmail.com" class="contact-button">
+        <a href="mailto:contact@domain.com" class="contact-button">
             <i class="fas fa-envelope"></i>
-            <span>ايميل</span>
-        </a>
-        <a href="https://t.me/ibrah_070" class="contact-button">
-            <i class="fab fa-telegram"></i>
-            <span>تلجرام</span>
+            <span>بريد إلكتروني</span>
         </a>
     </div>
 
-    <!-- السكربتات -->
     <script>
-        // إدارة القائمة المتنقلة
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : 
-                '<i class="fas fa-bars"></i>';
+        // Toggle mobile menu
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
-
-        // إدارة القوائم المنسدلة في الجوّال
-        document.querySelectorAll('.nav-links > li').forEach(item => {
-            if (item.querySelector('.dropdown-menu')) {
-                const link = item.querySelector('a:first-child');
-                link.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768px) {
-                        e.preventDefault();
-                        const dropdown = item.querySelector('.dropdown-menu');
-                        dropdown.classList.toggle('active');
-                        
-                        // تدوير أيقونة السهم
-                        const icon = link.querySelector('i');
-                        if (icon) {
-                            icon.style.transform = dropdown.classList.contains('active') ? 
-                                'rotate(180deg)' : 'rotate(0)';
-                        }
-                    }
-                });
-            }
-        });
-
-        // تحميل المحتوى الديناميكي
-        async function loadContent(page) {
-            try {
-                const response = await fetch(page);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                
-                // استخراج المحتوى من الصفحة المحملة
-                const mainContainer = tempDiv.querySelector('.main-container');
-                if (mainContainer) {
-                    document.getElementById('content-container').innerHTML = mainContainer.innerHTML;
-                    document.querySelector('.hero-section').style.display = 'none';
-                    document.querySelector('.back-button').style.display = 'block';
-                    
-                    // تنفيذ السكربتات
-                    const scripts = tempDiv.getElementsByTagName('script');
-                    for (let script of scripts) {
-                        eval(script.innerHTML);
-                    }
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل المحتوى:', error);
-                document.getElementById('content-container').innerHTML = 
-                    '<div style="text-align: center; color: red;">عذراً، حدث خطأ في تحميل المحتوى</div>';
-            }
-        }
     </script>
 </body>
 </html>
