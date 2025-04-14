@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة - الصفحة الشخصية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        /* نفس الأنماط الأساسية */
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* أنماط المدونة */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .blog-post {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .post-header {
+            margin-bottom: 20px;
+        }
+
+        .post-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+
+        .post-meta i {
+            color: var(--main-color);
+            margin-left: 5px;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .post-content {
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            background: var(--bg-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .widget-title {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 10px;
+        }
+
+        .category-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s;
+        }
+
+        .category-list a:hover {
+            color: var(--main-color);
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px 0 0 6px;
+            outline: none;
+        }
+
+        .search-btn {
+            background: var(--main-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- نفس القائمة العلوية -->
+    <!-- Replace the current nav section with this -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">اسمك</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li>
+                    <a href="#">خدماتي <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="life-goals.html">Life goals</a>
+                        <a href="link-manager.html">Link Management</a>
+                        <a href="cmd-manager.html">Command manager</a>
+                        <a href="Untitled-2.html">Task Management</a>
+                    </div>
+                </li>
+                <li><a href="about.html">عني</a></li>
+                <li><a href="portfolio.html">أعمالي</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="contact.html">اتصل بي</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Add the dropdown menu styles if not already present -->
+    <style>
+        .dropdown-menu {
+            position: absolute;
+            background: white;
+            min-width: 200px;
+            box-shadow: var(--box-shadow);
+            border-radius: 6px;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            top: 100%;
+            right: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+    </style>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1>المدونة</h1>
+            <p>آخر المقالات والتدوينات</p>
+        </section>
+
+        <div class="blog-container">
+            <div class="posts-section">
+                <!-- مقال 1 -->
+                <article class="blog-post">
+                    <header class="post-header">
+                        <h2 class="post-title">عنوان المقال الأول</h2>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i>15 يناير 2024</span>
+                            <span><i class="far fa-user"></i>اسم الكاتب</span>
+                            <span><i class="far fa-comments"></i>5 تعليقات</span>
+                        </div>
+                    </header>
+                    <img src="https://via.placeholder.com/800x400" alt="صورة المقال" class="post-image">
+                    <div class="post-content">
+                        <p>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص...</p>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">تطوير</span>
+                        <span class="tag">برمجة</span>
+                        <span class="tag">تصميم</span>
+                    </div>
+                    <a href="#" class="service-btn">اقرأ المزيد</a>
+                </article>
+
+                <!-- مقال 2 -->
+                <article class="blog-post">
+                    <header class="post-header">
+                        <h2 class="post-title">عنوان المقال الثاني</h2>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i>10 يناير 2024</span>
+                            <span><i class="far fa-user"></i>اسم الكاتب</span>
+                            <span><i class="far fa-comments"></i>3 تعليقات</span>
+                        </div>
+                    </header>
+                    <img src="https://via.placeholder.com/800x400" alt="صورة المقال" class="post-image">
+                    <div class="post-content">
+                        <p>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى...</p>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">تقنية</span>
+                        <span class="tag">ذكاء اصطناعي</span>
+                    </div>
+                    <a href="#" class="service-btn">اقرأ المزيد</a>
+                </article>
+            </div>
+
+            <aside class="sidebar">
+                <!-- مربع البحث -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">بحث</h3>
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="ابحث هنا...">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <!-- التصنيفات -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">التصنيفات</h3>
+                    <ul class="category-list">
+                        <li><a href="#">تطوير الويب <span>(5)</span></a></li>
+                        <li><a href="#">تصميم المواقع <span>(3)</span></a></li>
+                        <li><a href="#">تطبيقات الموبايل <span>(4)</span></a></li>
+                        <li><a href="#">الذكاء الاصطناعي <span>(2)</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- آخر المقالات -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">آخر المقالات</h3>
+                    <ul class="category-list">
+                        <li><a href="#">عنوان المقال الأول</a></li>
+                        <li><a href="#">عنوان المقال الثاني</a></li>
+                        <li><a href="#">عنوان المقال الثالث</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

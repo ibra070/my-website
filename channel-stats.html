@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قناة مدرسة الزيرو</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background-color: var(--main-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stats-title {
+            color: var(--main-color);
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-info {
+            margin-bottom: 15px;
+        }
+
+        .stats-numbers {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .stats-numbers span {
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        .progress-bar {
+            background: #eee;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--main-color);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 5px;
+            top: -20px;
+            color: var(--main-color);
+            font-size: 14px;
+        }
+
+        .milestone-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .milestone {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: #eee;
+            color: #666;
+            transition: 0.3s;
+        }
+
+        .milestone.active {
+            background: var(--main-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>قناة مدرسة الزيرو</h1>
+        </div>
+
+        <div class="stats-section">
+            <h2 class="stats-title">الفيديوهات</h2>
+            <div class="stats-info">
+                <div class="stats-numbers">2811 <span>من 6000</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 46.9%">
+                        <span class="progress-text">46.9%</span>
+                    </div>
+                </div>
+                <div class="milestone-buttons">
+                    <button class="milestone active">2,000</button>
+                    <button class="milestone active">2,500</button>
+                    <button class="milestone">3,000</button>
+                    <button class="milestone">3,500</button>
+                    <button class="milestone">4,000</button>
+                    <button class="milestone">4,500</button>
+                    <button class="milestone">5,000</button>
+                    <button class="milestone">6,000</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2 class="stats-title">المشتركين</h2>
+            <div class="stats-info">
+                <div class="stats-numbers">1,518,028 <span>من 10,000,000</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 15.2%">
+                        <span class="progress-text">15.2%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // إضافة تفاعل للأزرار
+        document.querySelectorAll('.milestone').forEach(button => {
+            button.addEventListener('click', () => {
+                const value = parseInt(button.textContent.replace(',', ''));
+                const currentValue = 2811;
+                if (value <= currentValue) {
+                    button.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- Add before closing body tag -->
+    <div class="edit-mode">
+        <button class="edit-btn" onclick="toggleEditPanel()">تعديل الإحصائيات</button>
+        <div class="edit-panel" id="editPanel">
+            <div id="passwordSection">
+                <input type="password" class="password-input" id="passwordInput" placeholder="كلمة المرور">
+                <button class="edit-btn" onclick="checkPassword()">دخول</button>
+            </div>
+            <form class="stats-edit-form" id="statsForm">
+                <div class="form-group">
+                    <label>عدد الفيديوهات الحالي</label>
+                    <input type="number" id="currentVideos" required>
+                </div>
+                <div class="form-group">
+                    <label>هدف الفيديوهات</label>
+                    <input type="number" id="targetVideos" required>
+                </div>
+                <div class="form-group">
+                    <label>عدد المشتركين الحالي</label>
+                    <input type="number" id="currentSubs" required>
+                </div>
+                <div class="form-group">
+                    <label>هدف المشتركين</label>
+                    <input type="number" id="targetSubs" required>
+                </div>
+                <button type="submit" class="edit-btn">حفظ التغييرات</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add after existing script
+        const ADMIN_PASSWORD = '123456'; // غير كلمة المرور هنا
+        let stats = {
+            videos: {
+                current: 2811,
+                target: 6000
+            },
+            subscribers: {
+                current: 1518028,
+                target: 10000000
+            }
+        };
+
+        function toggleEditPanel() {
+            document.getElementById('editPanel').classList.toggle('active');
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').style.display = 'none';
+                document.getElementById('statsForm').classList.add('active');
+                loadCurrentStats();
+            } else {
+                alert('كلمة المرور غير صحيحة');
+            }
+        }
+
+        function loadCurrentStats() {
+            document.getElementById('currentVideos').value = stats.videos.current;
+            document.getElementById('targetVideos').value = stats.videos.target;
+            document.getElementById('currentSubs').value = stats.subscribers.current;
+            document.getElementById('targetSubs').value = stats.subscribers.target;
+        }
+
+        function updateStats() {
+            const videoProgress = (stats.videos.current / stats.videos.target) * 100;
+            const subsProgress = (stats.subscribers.current / stats.subscribers.target) * 100;
+
+            document.querySelector('.stats-numbers').innerHTML = 
+                `${stats.videos.current.toLocaleString()} <span>من ${stats.videos.target.toLocaleString()}</span>`;
+            document.querySelector('.progress-fill').style.width = `${videoProgress}%`;
+            document.querySelector('.progress-text').textContent = `${videoProgress.toFixed(1)}%`;
+
+            document.querySelectorAll('.stats-numbers')[1].innerHTML = 
+                `${stats.subscribers.current.toLocaleString()} <span>من ${stats.subscribers.target.toLocaleString()}</span>`;
+            document.querySelectorAll('.progress-fill')[1].style.width = `${subsProgress}%`;
+            document.querySelectorAll('.progress-text')[1].textContent = `${subsProgress.toFixed(1)}%`;
+        }
+
+        document.getElementById('statsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            stats = {
+                videos: {
+                    current: parseInt(document.getElementById('currentVideos').value),
+                    target: parseInt(document.getElementById('targetVideos').value)
+                },
+                subscribers: {
+                    current: parseInt(document.getElementById('currentSubs').value),
+                    target: parseInt(document.getElementById('targetSubs').value)
+                }
+            };
+            updateStats();
+            toggleEditPanel();
+            alert('تم تحديث الإحصائيات بنجاح');
+        });
+
+        // Initialize stats
+        updateStats();
+    </script>

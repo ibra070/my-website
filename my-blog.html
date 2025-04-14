@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدونتي الشخصية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .blog-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .post-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .post-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .blog-posts {
+            display: grid;
+            gap: 20px;
+        }
+
+        .post {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .post-header {
+            margin-bottom: 15px;
+        }
+
+        .post-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .post-content {
+            color: #34495e;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .edit-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>مدونتي الشخصية</h1>
+        </header>
+
+        <form class="blog-form" id="blogForm">
+            <div class="form-group">
+                <label>عنوان المنشور</label>
+                <input type="text" id="titleInput" required>
+            </div>
+            <div class="form-group">
+                <label>المحتوى</label>
+                <textarea id="contentInput" required></textarea>
+            </div>
+            <button type="submit" class="post-btn">نشر</button>
+        </form>
+
+        <div class="blog-posts" id="blogPosts"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const blogForm = document.getElementById('blogForm');
+            const blogPosts = document.getElementById('blogPosts');
+            
+            let posts = JSON.parse(localStorage.getItem('blog-posts')) || [];
+
+            function renderPosts() {
+                blogPosts.innerHTML = '';
+                posts.forEach((post, index) => {
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post';
+                    postElement.innerHTML = `
+                        <div class="post-header">
+                            <h2 class="post-title">${post.title}</h2>
+                            <div class="post-meta">${post.date}</div>
+                        </div>
+                        <div class="post-content">${post.content}</div>
+                        <div class="post-actions">
+                            <button class="edit-btn">تعديل</button>
+                            <button class="delete-btn">حذف</button>
+                        </div>
+                    `;
+
+                    const editBtn = postElement.querySelector('.edit-btn');
+                    const deleteBtn = postElement.querySelector('.delete-btn');
+
+                    deleteBtn.addEventListener('click', () => {
+                        if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
+                            posts.splice(index, 1);
+                            savePosts();
+                            renderPosts();
+                        }
+                    });
+
+                    editBtn.addEventListener('click', () => {
+                        postElement.innerHTML = `
+                            <div class="form-group">
+                                <input type="text" class="edit-title" value="${post.title}">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="edit-content">${post.content}</textarea>
+                            </div>
+                            <div class="post-actions">
+                                <button class="post-btn save-edit">حفظ</button>
+                                <button class="delete-btn cancel-edit">إلغاء</button>
+                            </div>
+                        `;
+
+                        const saveBtn = postElement.querySelector('.save-edit');
+                        const cancelBtn = postElement.querySelector('.cancel-edit');
+
+                        saveBtn.addEventListener('click', () => {
+                            const editedPost = {
+                                title: postElement.querySelector('.edit-title').value.trim(),
+                                content: postElement.querySelector('.edit-content').value.trim(),
+                                date: post.date
+                            };
+
+                            if (editedPost.title && editedPost.content) {
+                                posts[index] = editedPost;
+                                savePosts();
+                                renderPosts();
+                            }
+                        });
+
+                        cancelBtn.addEventListener('click', () => {
+                            renderPosts();
+                        });
+                    });
+
+                    blogPosts.appendChild(postElement);
+                });
+            }
+
+            function savePosts() {
+                localStorage.setItem('blog-posts', JSON.stringify(posts));
+            }
+
+            blogForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newPost = {
+                    title: document.getElementById('titleInput').value.trim(),
+                    content: document.getElementById('contentInput').value.trim(),
+                    date: new Date().toLocaleDateString('ar-SA')
+                };
+
+                posts.unshift(newPost);
+                savePosts();
+                renderPosts();
+                blogForm.reset();
+            });
+
+            renderPosts();
+        });
+    </script>
+</body>
+</html>

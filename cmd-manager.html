@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدير أوامر </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        input, textarea, select {
+            font-size: 1em;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .command-text {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+
+        .command-type {
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .command-description {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        button {
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .success-message {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e1e8ef;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            color: #2c3e50;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .command-form {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e1e8ef;
+        }
+
+        .filter-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e1e8ef;
+        }
+
+        .filter-section select {
+            width: 200px;
+        }
+
+        .command-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ef;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .command-type {
+            color: #3498db;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .command-text {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            color: #2c3e50;
+            border: 1px solid #e1e8ef;
+            margin: 10px 0;
+            direction: ltr;
+        }
+
+        .command-description {
+            color: #5d6d7e;
+            line-height: 1.5;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .copy-btn {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        .edit-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2ecc71;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(46, 204, 113, 0.2);
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>مدير أوامر</h1>
+        
+        <!-- إضافة قسم الفرز -->
+        <div class="filter-section">
+            <select id="filterType">
+                <option value="all">كل الأوامر</option>
+                <option value="cmd">CMD</option>
+                <option value="powershell">PowerShell</option>
+                <option value="run">Run</option>
+            </select>
+        </div>
+        
+        <form class="command-form" id="commandForm">
+            <div class="form-group">
+                <label>نوع الأمر</label>
+                <select id="typeInput" required>
+                    <option value="cmd">CMD</option>
+                    <option value="powershell">PowerShell</option>
+                    <option value="run">Run</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>الأمر</label>
+                <input type="text" id="commandInput" placeholder="أدخل الأمر هنا" required>
+            </div>
+            <div class="form-group">
+                <label>الوصف</label>
+                <textarea id="descriptionInput" placeholder="اكتب وصف الأمر وكيفية استخدامه" required></textarea>
+            </div>
+            <button type="submit" class="save-btn">حفظ الأمر</button>
+        </form>
+
+        <div class="command-list" id="commandList"></div>
+    </div>
+
+    <div class="success-message" id="successMessage">تم نسخ الأمر بنجاح!</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const commandForm = document.getElementById('commandForm');
+            const commandList = document.getElementById('commandList');
+            const successMessage = document.getElementById('successMessage');
+            const filterType = document.getElementById('filterType');
+            
+            let commands = JSON.parse(localStorage.getItem('commands')) || [];
+
+            // إضافة مستمع حدث للفرز
+            filterType.addEventListener('change', () => {
+                renderCommands();
+            });
+
+            function renderCommands() {
+                commandList.innerHTML = '';
+                const selectedType = filterType.value;
+                
+                const filteredCommands = selectedType === 'all' 
+                    ? commands 
+                    : commands.filter(cmd => cmd.type === selectedType);
+
+                filteredCommands.forEach((cmd, index) => {
+                    const commandCard = document.createElement('div');
+                    commandCard.className = 'command-card';
+                    commandCard.innerHTML = `
+                        <div class="command-content">
+                            <div class="command-type">${cmd.type.toUpperCase()}</div>
+                            <div class="command-text">${cmd.command}</div>
+                            <div class="command-description">${cmd.description}</div>
+                        </div>
+                        <div class="button-group">
+                            <button class="copy-btn">نسخ</button>
+                            <button class="edit-btn">تعديل</button>
+                            <button class="delete-btn">حذف</button>
+                        </div>
+                    `;
+
+                    const copyBtn = commandCard.querySelector('.copy-btn');
+                    const editBtn = commandCard.querySelector('.edit-btn');
+                    const deleteBtn = commandCard.querySelector('.delete-btn');
+
+                    copyBtn.addEventListener('click', () => {
+                        navigator.clipboard.writeText(cmd.command);
+                        showSuccessMessage();
+                    });
+
+                    deleteBtn.addEventListener('click', () => {
+                        if (confirm('هل أنت متأكد من حذف هذا الأمر؟')) {
+                            commands.splice(index, 1);
+                            saveCommands();
+                            renderCommands();
+                        }
+                    });
+
+                    editBtn.addEventListener('click', () => {
+                        const commandContent = commandCard.querySelector('.command-content');
+                        commandContent.innerHTML = `
+                            <div class="form-group">
+                                <select class="edit-type">
+                                    <option value="cmd" ${cmd.type === 'cmd' ? 'selected' : ''}>CMD</option>
+                                    <option value="run" ${cmd.type === 'run' ? 'selected' : ''}>Run</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="edit-command" value="${cmd.command}">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="edit-description">${cmd.description}</textarea>
+                            </div>
+                            <div class="button-group">
+                                <button class="save-btn">حفظ</button>
+                                <button class="delete-btn">إلغاء</button>
+                            </div>
+                        `;
+
+                        const saveBtn = commandContent.querySelector('.save-btn');
+                        const cancelBtn = commandContent.querySelector('.delete-btn');
+
+                        saveBtn.addEventListener('click', () => {
+                            const editedCommand = {
+                                type: commandContent.querySelector('.edit-type').value,
+                                command: commandContent.querySelector('.edit-command').value.trim(),
+                                description: commandContent.querySelector('.edit-description').value.trim()
+                            };
+
+                            if (editedCommand.command && editedCommand.description) {
+                                commands[index] = editedCommand;
+                                saveCommands();
+                                renderCommands();
+                            }
+                        });
+
+                        cancelBtn.addEventListener('click', () => {
+                            renderCommands();
+                        });
+                    });
+
+                    commandList.appendChild(commandCard);
+                });
+            }
+
+            function saveCommands() {
+                localStorage.setItem('commands', JSON.stringify(commands));
+            }
+
+            commandForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newCommand = {
+                    type: document.getElementById('typeInput').value,
+                    command: document.getElementById('commandInput').value.trim(),
+                    description: document.getElementById('descriptionInput').value.trim()
+                };
+
+                commands.push(newCommand);
+                saveCommands();
+                renderCommands();
+                commandForm.reset();
+            });
+
+            renderCommands();
+        });
+    </script>
+</body>
+</html>

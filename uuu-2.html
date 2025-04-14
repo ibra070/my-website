@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدير المعلومات الشخصية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e1e8ef;
+            border-radius: 6px;
+        }
+
+        .info-form {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e8ef;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #e1e8ef;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .info-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .info-card {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e1e8ef;
+        }
+
+        .info-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .info-content {
+            color: #34495e;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .info-category {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مدير المعلومات الشخصية</h1>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="ابحث عن معلومة...">
+        </div>
+
+        <form class="info-form" id="infoForm">
+            <div class="form-group">
+                <label>العنوان</label>
+                <input type="text" id="titleInput" required>
+            </div>
+            <div class="form-group">
+                <label>التصنيف</label>
+                <select id="categoryInput">
+                    <option value="شخصي">شخصي</option>
+                    <option value="عمل">عمل</option>
+                    <option value="مالي">مالي</option>
+                    <option value="صحي">صحي</option>
+                    <option value="أخرى">أخرى</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>المحتوى</label>
+                <textarea id="contentInput" required></textarea>
+            </div>
+            <button type="submit" class="save-btn">حفظ المعلومة</button>
+        </form>
+
+        <div class="info-list" id="infoList"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const infoForm = document.getElementById('infoForm');
+            const infoList = document.getElementById('infoList');
+            const searchInput = document.getElementById('searchInput');
+            
+            let infos = JSON.parse(localStorage.getItem('infos')) || [];
+
+            function renderInfos(searchTerm = '') {
+                infoList.innerHTML = '';
+                const filteredInfos = infos.filter(info => 
+                    info.title.includes(searchTerm) || 
+                    info.content.includes(searchTerm) ||
+                    info.category.includes(searchTerm)
+                );
+
+                filteredInfos.forEach((info, index) => {
+                    const infoCard = document.createElement('div');
+                    infoCard.className = 'info-card';
+                    infoCard.innerHTML = `
+                        <div class="info-title">${info.title}</div>
+                        <div class="info-category">${info.category}</div>
+                        <div class="info-content">${info.content}</div>
+                        <div class="card-buttons">
+                            <button class="edit-btn">تعديل</button>
+                            <button class="delete-btn">حذف</button>
+                        </div>
+                    `;
+
+                    const deleteBtn = infoCard.querySelector('.delete-btn');
+                    const editBtn = infoCard.querySelector('.edit-btn');
+
+                    deleteBtn.addEventListener('click', () => {
+                        if (confirm('هل أنت متأكد من حذف هذه المعلومة؟')) {
+                            infos.splice(index, 1);
+                            saveInfos();
+                            renderInfos(searchInput.value);
+                        }
+                    });
+
+                    editBtn.addEventListener('click', () => {
+                        infoCard.innerHTML = `
+                            <div class="form-group">
+                                <input type="text" class="edit-title" value="${info.title}">
+                            </div>
+                            <div class="form-group">
+                                <select class="edit-category">
+                                    <option value="شخصي" ${info.category === 'شخصي' ? 'selected' : ''}>شخصي</option>
+                                    <option value="عمل" ${info.category === 'عمل' ? 'selected' : ''}>عمل</option>
+                                    <option value="مالي" ${info.category === 'مالي' ? 'selected' : ''}>مالي</option>
+                                    <option value="صحي" ${info.category === 'صحي' ? 'selected' : ''}>صحي</option>
+                                    <option value="أخرى" ${info.category === 'أخرى' ? 'selected' : ''}>أخرى</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="edit-content">${info.content}</textarea>
+                            </div>
+                            <div class="card-buttons">
+                                <button class="save-btn">حفظ</button>
+                                <button class="delete-btn">إلغاء</button>
+                            </div>
+                        `;
+
+                        const saveBtn = infoCard.querySelector('.save-btn');
+                        const cancelBtn = infoCard.querySelector('.delete-btn');
+
+                        saveBtn.addEventListener('click', () => {
+                            const editedInfo = {
+                                title: infoCard.querySelector('.edit-title').value.trim(),
+                                category: infoCard.querySelector('.edit-category').value,
+                                content: infoCard.querySelector('.edit-content').value.trim()
+                            };
+
+                            if (editedInfo.title && editedInfo.content) {
+                                infos[index] = editedInfo;
+                                saveInfos();
+                                renderInfos(searchInput.value);
+                            }
+                        });
+
+                        cancelBtn.addEventListener('click', () => {
+                            renderInfos(searchInput.value);
+                        });
+                    });
+
+                    infoList.appendChild(infoCard);
+                });
+            }
+
+            function saveInfos() {
+                localStorage.setItem('infos', JSON.stringify(infos));
+            }
+
+            infoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newInfo = {
+                    title: document.getElementById('titleInput').value.trim(),
+                    category: document.getElementById('categoryInput').value,
+                    content: document.getElementById('contentInput').value.trim()
+                };
+
+                infos.push(newInfo);
+                saveInfos();
+                renderInfos(searchInput.value);
+                infoForm.reset();
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                renderInfos(e.target.value);
+            });
+
+            renderInfos();
+        });
+    </script>
+</body>
+</html>

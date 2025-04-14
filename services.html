@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدماتي - الصفحة الشخصية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        /* نسخ الأنماط الأساسية من index.html */
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* أنماط إضافية للخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3em;
+            color: var(--main-color);
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .service-description {
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .service-features li {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .service-features li i {
+            color: var(--main-color);
+            margin-left: 10px;
+        }
+
+        .service-price {
+            font-size: 1.8em;
+            color: var(--main-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .service-btn {
+            background: var(--main-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .service-btn:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- نسخ القائمة العلوية من index.html -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">اسمك</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="services.html">خدماتي</a></li>
+                <li><a href="about.html">عني</a></li>
+                <li><a href="portfolio.html">أعمالي</a></li>
+                <li><a href="life-goals.html">أهدافي</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="contact.html">اتصل بي</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1>خدماتي</h1>
+            <p>مجموعة من الخدمات المتخصصة التي أقدمها</p>
+        </section>
+
+        <div class="services-grid">
+            <!-- خدمة 1 -->
+            <div class="service-card">
+                <i class="fas fa-code service-icon"></i>
+                <h3 class="service-title">تطوير المواقع</h3>
+                <p class="service-description">تصميم وتطوير مواقع ويب احترافية وعصرية</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i>تصميم متجاوب</li>
+                    <li><i class="fas fa-check"></i>واجهة مستخدم سهلة</li>
+                    <li><i class="fas fa-check"></i>تحسين محركات البحث</li>
+                </ul>
+                <div class="service-price">$500</div>
+                <a href="contact.html" class="service-btn">طلب الخدمة</a>
+            </div>
+
+            <!-- خدمة 2 -->
+            <div class="service-card">
+                <i class="fas fa-mobile-alt service-icon"></i>
+                <h3 class="service-title">تطبيقات الموبايل</h3>
+                <p class="service-description">تطوير تطبيقات موبايل متقدمة</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i>تطبيقات iOS وأندرويد</li>
+                    <li><i class="fas fa-check"></i>واجهة مستخدم سلسة</li>
+                    <li><i class="fas fa-check"></i>أداء عالي</li>
+                </ul>
+                <div class="service-price">$800</div>
+                <a href="contact.html" class="service-btn">طلب الخدمة</a>
+            </div>
+
+            <!-- خدمة 3 -->
+            <div class="service-card">
+                <i class="fas fa-server service-icon"></i>
+                <h3 class="service-title">خدمات الاستضافة</h3>
+                <p class="service-description">استضافة موثوقة وآمنة لمشروعك</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i>حماية متقدمة</li>
+                    <li><i class="fas fa-check"></i>نسخ احتياطي يومي</li>
+                    <li><i class="fas fa-check"></i>دعم فني 24/7</li>
+                </ul>
+                <div class="service-price">$50/شهر</div>
+                <a href="contact.html" class="service-btn">طلب الخدمة</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
