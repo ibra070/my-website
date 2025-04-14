@@ -57,8 +57,9 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
@@ -68,6 +69,7 @@
             padding: 10px 15px;
             border-radius: 6px;
             transition: all 0.3s;
+            display: block;
         }
 
         .nav-links a:hover {
@@ -81,6 +83,7 @@
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
+            min-height: calc(100vh - 160px);
         }
 
         .hero-section {
@@ -100,291 +103,7 @@
             margin: 0 auto;
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
-</head>
-<style>
-    /* Add mobile menu button */
-    .menu-toggle {
-        display: none;
-        font-size: 1.5em;
-        color: var(--main-color);
-        cursor: pointer;
-    }
-
-    /* Mobile responsive styles */
-    @media (max-width: 768px) {
-        .menu-toggle {
-            display: block;
-        }
-
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 70px;
-            right: 0;
-            width: 100%;
-            background: white;
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-links.active {
-            display: flex;
-        }
-
-        .dropdown-menu {
-            position: static;
-            opacity: 1;
-            visibility: visible;
-            box-shadow: none;
-            margin-top: 10px;
-        }
-
-        .social-links {
-            display: flex !important;
-            border: none;
-            justify-content: center;
-            margin: 15px 0;
-            padding: 15px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-    }
-</style>
-
-<!-- Add menu toggle button in navbar -->
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="logo">Ibrahem Mok</a>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="#">خدماتي <i class="fas fa-chevron-down"></i></a>
-                <div class="dropdown-menu">
-                    <a href="life-goals.html">Life goals</a>
-                    <a href="link-manager.html">Link Management</a>
-                    <a href="cmd-manager.html">Command manager</a>
-                    <a href="Untitled-2.html">Task Management</a>
-                </div>
-            </li>
-            <li><a href="about.html">عني</a></li>
-            <li><a href="portfolio.html">أعمالي</a></li>
-            <li><a href="blog.html">المدونة</a></li>
-            <li><a href="contact.html">اتصل بي</a></li>
-            <li class="social-links">
-                <a href="https://github.com/ibra070" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://twitter.com/YOUR_TWITTER_HANDLE" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.facebook.com/?locale=ar_AR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://wa.me/967778830856" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://t.me/ibrah_070" title="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="mailto:alnamisibrahem@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-            </li>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<!-- Add JavaScript for mobile menu -->
-<!-- Add this right after your existing styles -->
-<style>
-    .mobile-menu-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .mobile-menu-item i {
-        transition: transform 0.3s;
-    }
-
-    .mobile-menu-item.active i {
-        transform: rotate(180deg);
-    }
-
-    .mobile-submenu {
-        display: none;
-        padding: 10px 20px;
-        background: var(--bg-color);
-        border-radius: 6px;
-    }
-
-    .mobile-submenu.active {
-        display: block;
-    }
-
-    .contact-buttons {
-        display: none;
-    }
-
-    @media (max-width: 768px) {
-        .contact-buttons {
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            justify-content: space-around;
-            z-index: 1000;
-        }
-
-        .contact-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-
-        .contact-button i {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-            color: var(--main-color);
-        }
-
-        .main-content {
-            margin-bottom: 80px;
-        }
-    }
-</style>
-
-<!-- Add this before closing body tag -->
-<div class="contact-buttons">
-    <a href="tel:+967778830856" class="contact-button">
-        <i class="fas fa-phone"></i>
-        <span>اتصال</span>
-    </a>
-    <a href="https://wa.me/967778830856" class="contact-button">
-        <i class="fab fa-whatsapp"></i>
-        <span>واتساب</span>
-    </a>
-    <a href="mailto:alnamisibrahem@gmail.com" class="contact-button">
-        <i class="fas fa-envelope"></i>
-        <span>ايميل</span>
-    </a>
-    <a href="https://t.me/ibrah_070" class="contact-button">
-        <i class="fab fa-telegram"></i>
-        <span>تلجرام</span>
-    </a>
-</div>
-
-<!-- Update your mobile menu JavaScript -->
-<script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        menuToggle.innerHTML = navLinks.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : 
-            '<i class="fas fa-bars"></i>';
-    });
-
-    // Add click handlers for mobile submenu toggles
-    document.querySelectorAll('.mobile-menu-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            item.classList.toggle('active');
-            const submenu = item.nextElementSibling;
-            if (submenu.classList.contains('mobile-submenu')) {
-                submenu.classList.toggle('active');
-            }
-        });
-    });
-</script>
-
-    <style>
-        .social-links {
-            display: flex !important;
-            gap: 15px;
-            margin-right: 20px;
-            padding-right: 20px;
-            border-right: 1px solid var(--border-color);
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.2em;
-            padding: 5px !important;
-            border-radius: 50% !important;
-            width: 35px;
-            height: 35px;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            color: white;
-            background: var(--main-color);
-            transform: translateY(-3px);
-        }
-
-        @media (max-width: 768px) {
-            .social-links {
-                display: none !important;
-            }
-        }
-    </style>
-
-    <main class="main-content">
-        <section class="hero-section">
-            <h1>مرحباً بك في صفحتي الشخصية</h1>
-            <p>مكان لمشاركة رحلتي، أهدافي، وإنجازاتي</p>
-        </section>
-        
-        <div id="content-container"></div>
-    </main>
-
-    <script>
-        async function loadContent(page) {
-            try {
-                const response = await fetch(page);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                
-                // استخراج المحتوى من الصفحة المحملة
-                const mainContainer = tempDiv.querySelector('.main-container');
-                if (mainContainer) {
-                    document.getElementById('content-container').innerHTML = mainContainer.innerHTML;
-                    document.querySelector('.hero-section').style.display = 'none';
-                    document.querySelector('.back-button').style.display = 'block'; // Show back button
-                    
-                    // تنفيذ السكربتات
-                    const scripts = tempDiv.getElementsByTagName('script');
-                    for (let script of scripts) {
-                        eval(script.innerHTML);
-                    }
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل المحتوى:', error);
-                document.getElementById('content-container').innerHTML = 
-                    '<div style="text-align: center; color: red;">عذراً، حدث خطأ في تحميل المحتوى</div>';
-            }
-        }
-    </script>
-    <style>
-        /* إضافة أنماط القائمة المنسدلة */
+        /* أنماط القائمة المنسدلة */
         .dropdown-menu {
             position: absolute;
             background: white;
@@ -396,6 +115,7 @@
             transition: 0.3s;
             top: 100%;
             right: 0;
+            z-index: 1001;
         }
 
         .nav-links li {
@@ -416,4 +136,273 @@
         .dropdown-menu a:last-child {
             border-bottom: none;
         }
+
+        /* أنماط روابط التواصل */
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-right: 20px;
+            padding-right: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.1em;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: white;
+            background: var(--main-color);
+            transform: translateY(-3px);
+        }
+
+        /* أنماط القائمة المتنقلة */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5em;
+            color: var(--main-color);
+            cursor: pointer;
+        }
+
+        /* أنماط زر الرجوع */
+        .back-button {
+            display: none;
+            margin-bottom: 20px;
+            background: var(--main-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        /* أنماط أزرار التواصل للجوال */
+        .contact-buttons {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            justify-content: space-around;
+            z-index: 1000;
+        }
+
+        .contact-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.8em;
+        }
+
+        .contact-button i {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            color: var(--main-color);
+        }
+
+        /* أنماط للجوال */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 100%;
+                background: white;
+                padding: 15px;
+                box-shadow: var(--box-shadow);
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                margin-top: 5px;
+                margin-right: 15px;
+                display: none;
+            }
+
+            .dropdown-menu.active {
+                display: block;
+            }
+
+            .social-links {
+                display: none !important;
+            }
+
+            .contact-buttons {
+                display: flex;
+            }
+
+            .main-content {
+                margin-bottom: 70px;
+            }
+        }
     </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Ibrahem Mok</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li class="dropdown">
+                    <a href="#">خدماتي <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="life-goals.html">Life goals</a>
+                        <a href="link-manager.html">Link Management</a>
+                        <a href="cmd-manager.html">Command manager</a>
+                        <a href="task-management.html">Task Management</a>
+                    </div>
+                </li>
+                <li><a href="about.html">عني</a></li>
+                <li><a href="portfolio.html">أعمالي</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="contact.html">اتصل بي</a></li>
+                <li class="social-links">
+                    <a href="https://github.com/ibra070" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com/YOUR_TWITTER_HANDLE" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/?locale=ar_AR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/967778830856" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/ibrah_070" title="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="mailto:alnamisibrahem@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <a href="index.html" class="back-button" id="backButton" style="display: none;">
+            <i class="fas fa-arrow-right"></i> العودة للرئيسية
+        </a>
+        <section class="hero-section">
+            <h1>مرحباً بك في صفحتي الشخصية</h1>
+            <p>مكان لمشاركة رحلتي، أهدافي، وإنجازاتي</p>
+        </section>
+        
+        <div id="content-container"></div>
+    </main>
+
+    <div class="contact-buttons">
+        <a href="tel:+967778830856" class="contact-button">
+            <i class="fas fa-phone"></i>
+            <span>اتصال</span>
+        </a>
+        <a href="https://wa.me/967778830856" class="contact-button">
+            <i class="fab fa-whatsapp"></i>
+            <span>واتساب</span>
+        </a>
+        <a href="mailto:alnamisibrahem@gmail.com" class="contact-button">
+            <i class="fas fa-envelope"></i>
+            <span>ايميل</span>
+        </a>
+        <a href="https://t.me/ibrah_070" class="contact-button">
+            <i class="fab fa-telegram"></i>
+            <span>تلجرام</span>
+        </a>
+    </div>
+
+    <script>
+        // تنفيذ القائمة المتنقلة
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : 
+                '<i class="fas fa-bars"></i>';
+        });
+
+        // تنفيذ القوائم المنسدلة للجوال
+        document.querySelectorAll('.dropdown > a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = link.parentElement;
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    menu.classList.toggle('active');
+                }
+            });
+        });
+
+        // تحميل المحتوى الديناميكي
+        async function loadContent(page) {
+            try {
+                const response = await fetch(page);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                const mainContainer = tempDiv.querySelector('.main-container');
+                if (mainContainer) {
+                    document.getElementById('content-container').innerHTML = mainContainer.innerHTML;
+                    document.querySelector('.hero-section').style.display = 'none';
+                    document.getElementById('backButton').style.display = 'block';
+                    
+                    const scripts = tempDiv.getElementsByTagName('script');
+                    for (let script of scripts) {
+                        const newScript = document.createElement('script');
+                        newScript.innerHTML = script.innerHTML;
+                        document.body.appendChild(newScript);
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل المحتوى:', error);
+                document.getElementById('content-container').innerHTML = 
+                    '<div style="text-align: center; color: red; padding: 20px;">عذراً، حدث خطأ في تحميل المحتوى</div>';
+            }
+        }
+
+        // إخفاء القائمة عند النقر على رابط في الجوال
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && !link.querySelector('i')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // زر الرجوع
+        document.getElementById('backButton').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('content-container').innerHTML = '';
+            document.querySelector('.hero-section').style.display = 'block';
+            document.getElementById('backButton').style.display = 'none';
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
