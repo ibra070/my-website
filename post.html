@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض المقال - المدونة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+        }
+
+        .post-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--main-color);
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .post-header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .post-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .post-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.1em;
+        }
+
+        .post-content h1, .post-content h2 {
+            margin: 1.5em 0 1em;
+            color: #333;
+        }
+
+        .post-content p {
+            margin-bottom: 1.2em;
+        }
+
+        .post-content img {
+            max-width: 100%;
+            border-radius: 6px;
+            margin: 1em 0;
+        }
+
+        .share-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            margin: 30px 0;
+        }
+
+        .share-title {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .share-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .share-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background: #1877f2; }
+        .twitter { background: #1da1f2; }
+        .whatsapp { background: #25d366; }
+        .telegram { background: #0088cc; }
+
+        .comments-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            margin-top: 30px;
+        }
+
+        .comment-form {
+            margin-bottom: 30px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        .comment-button {
+            background: var(--main-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .comment-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .comments-list {
+            margin-top: 30px;
+        }
+
+        .comment {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .comment-date {
+            font-size: 0.9em;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                margin: 20px;
+            }
+
+            .post-title {
+                font-size: 2em;
+            }
+
+            .share-buttons {
+                flex-wrap: wrap;
+            }
+
+            .share-button {
+                flex: 1;
+                min-width: 140px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="post-container">
+        <a href="blog.html" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            العودة للمدونة
+        </a>
+
+        <article class="post">
+            <header class="post-header">
+                <h1 class="post-title" id="postTitle"></h1>
+                <div class="post-meta">
+                    <span><i class="fas fa-folder"></i> <span id="postCategory"></span></span>
+                    <span><i class="far fa-calendar"></i> <span id="postDate"></span></span>
+                    <span><i class="far fa-user"></i> <span id="postAuthor"></span></span>
+                </div>
+            </header>
+
+            <img id="postImage" class="featured-image" alt="">
+
+            <div class="post-content" id="postContent"></div>
+
+            <div class="share-section">
+                <h3 class="share-title">شارك المقال</h3>
+                <div class="share-buttons" id="shareButtons">
+                    <a href="#" class="share-button facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        فيسبوك
+                    </a>
+                    
+                    
+                    
+                    </a>
+                    <a href="#" class="share-button whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        واتساب
+                    </a>
+                    <a href="#" class="share-button telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                        تلجرام
+                    </a>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <h3>التعليقات</h3>
+                <form class="comment-form" id="commentForm">
+                    <textarea class="comment-input" placeholder="اكتب تعليقك هنا..." required></textarea>
+                    <button type="submit" class="comment-button">إضافة تعليق</button>
+                </form>
+                <div class="comments-list" id="commentsList"></div>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        // استرجاع معرف المقال من URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        // تحميل المقال
+        window.onload = function() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+            const post = posts.find(p => p.id == postId);
+
+            if (post) {
+                document.title = post.title + ' - المدونة';
+                document.getElementById('postTitle').textContent = post.title;
+                document.getElementById('postCategory').textContent = post.category;
+                document.getElementById('postDate').textContent = new Date(post.date).toLocaleDateString('ar-EG');
+                document.getElementById('postAuthor').textContent = post.author;
+                document.getElementById('postImage').src = post.image;
+                document.getElementById('postImage').alt = post.title;
+                document.getElementById('postContent').innerHTML = post.content;
+
+                // إعداد روابط المشاركة
+                setupShareButtons(post);
+                // تحميل التعليقات
+                loadComments();
+            }
+        };
+
+        // إعداد أزرار المشاركة
+        function setupShareButtons(post) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(post.title);
+            
+            const shareButtons = document.getElementById('shareButtons');
+            shareButtons.querySelector('.facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            shareButtons.querySelector('.twitter').href = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+            shareButtons.querySelector('.whatsapp').href = `https://wa.me/?text=${title}%20${url}`;
+            shareButtons.querySelector('.telegram').href = `https://t.me/share/url?url=${url}&text=${title}`;
+        }
+
+        // إدارة التعليقات
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const commentText = this.querySelector('textarea').value;
+            
+            const comment = {
+                id: Date.now(),
+                postId: postId,
+                text: commentText,
+                author: 'زائر',
+                date: new Date().toISOString()
+            };
+
+            const comments = JSON.parse(localStorage.getItem('blogComments')) || [];
+            comments.push(comment);
+            localStorage.setItem('blogComments', JSON.stringify(comments));
+
+            this.querySelector('textarea').value = '';
+            loadComments();
+        });
+
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('blogComments')) || [];
+            const postComments = comments.filter(c => c.postId == postId);
+            
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = postComments.length ? postComments.map(comment => `
+                <div class="comment">
+                    <div class="comment-author">${comment.author}</div>
+                    <div class="comment-date">${new Date(comment.date).toLocaleDateString('ar-EG')}</div>
+                    <div class="comment-text">${comment.text}</div>
+                </div>
+            `).join('') : '<p>لا توجد تعليقات بعد. كن أول من يعلق!</p>';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة مقال جديد - المدونة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <!-- إضافة محرر النصوص الغني -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+        }
+
+        .add-post-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .image-upload {
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            background: var(--main-color);
+            color: white;
+            flex: 1;
+        }
+
+        .cancel-btn {
+            background: #f1f1f1;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="add-post-container">
+        <div class="form-header">
+            <h1>إضافة مقال جديد</h1>
+            <p>شارك أفكارك ومعرفتك مع العالم</p>
+        </div>
+
+        <form id="addPostForm">
+            <div class="form-group">
+                <label for="title">عنوان المقال</label>
+                <input type="text" id="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">التصنيف</label>
+                <select id="category" required>
+                    <option value="">اختر التصنيف</option>
+                    <option value="programming">البرمجة</option>
+                    <option value="web">تطوير الويب</option>
+                    <option value="tech">تقنيات حديثة</option>
+                    <option value="tips">نصائح وإرشادات</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="excerpt">ملخص المقال</label>
+                <textarea id="excerpt" required maxlength="200" rows="3"></textarea>
+                <small>ملخص قصير يظهر في صفحة المدونة الرئيسية</small>
+            </div>
+
+            <div class="form-group">
+                <label>محتوى المقال</label>
+                <div class="editor-container">
+                    <div id="editor"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>صورة المقال</label>
+                <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>اضغط لرفع صورة</p>
+                    <img id="preview" class="preview-image">
+                </div>
+            </div>
+
+            <button type="button" class="preview-toggle" onclick="togglePreview()">
+                <i class="fas fa-eye"></i> معاينة المقال
+            </button>
+
+            <div class="preview-section" id="previewSection">
+                <h2 id="previewTitle"></h2>
+                <div id="previewContent"></div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="submit-btn">نشر المقال</button>
+                <a href="blog.html" class="cancel-btn">إلغاء</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        // إعداد محرر النصوص
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],  // إضافة خيارات حجم الخط
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],       // خيارات العناوين
+                    ['blockquote', 'code-block'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'direction': 'rtl' }],
+                    [{ 'align': ['right', 'center', 'left'] }],      // إضافة محاذاة النص
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // معاينة الصورة
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // معاينة المقال
+        function togglePreview() {
+            const previewSection = document.getElementById('previewSection');
+            previewSection.classList.toggle('active');
+            
+            if (previewSection.classList.contains('active')) {
+                document.getElementById('previewTitle').textContent = 
+                    document.getElementById('title').value;
+                document.getElementById('previewContent').innerHTML = 
+                    quill.root.innerHTML;
+            }
+        }
+
+        // حفظ المقال
+        document.getElementById('addPostForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const post = {
+                id: Date.now(),
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                excerpt: document.getElementById('excerpt').value,
+                content: quill.root.innerHTML,
+                image: document.getElementById('preview').src,
+                date: new Date().toISOString(),
+                author: 'Ibrahem Mok'
+            };
+
+            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+            posts.push(post);
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+
+            alert('تم نشر المقال بنجاح!');
+            window.location.href = 'blog.html';
+        });
+    </script>
+</body>
+</html>
