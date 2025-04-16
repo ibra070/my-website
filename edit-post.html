@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل المقال - المدونة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        :root {
+            --main-color: #0075ff;
+            --secondary-color: #2196f3;
+            --text-color: #777;
+            --bg-color: #f1f5f9;
+            --border-color: #ddd;
+            --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+            padding: 20px;
+        }
+
+        .edit-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--main-color);
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .save-button,
+        .cancel-button {
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .save-button {
+            background: var(--main-color);
+            color: white;
+            border: none;
+        }
+
+        .save-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .cancel-button {
+            background: white;
+            color: #666;
+            border: 1px solid var(--border-color);
+        }
+
+        .cancel-button:hover {
+            background: #f5f5f5;
+        }
+
+        /* Add these styles */
+        .delete-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .delete-button:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+        <a href="#" class="back-link" id="backLink">
+            <i class="fas fa-arrow-right"></i>
+            العودة للمقال
+        </a>
+
+        <h1>تعديل المقال</h1>
+        
+        <form class="edit-form" id="editForm">
+            <div class="form-group">
+                <label for="editTitle">عنوان المقال</label>
+                <input type="text" id="editTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editCategory">التصنيف</label>
+                <input type="text" id="editCategory" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editAuthor">الكاتب</label>
+                <input type="text" id="editAuthor" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editImage">رابط الصورة</label>
+                <input type="text" id="editImage" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editContent">محتوى المقال</label>
+                <textarea id="editContent" required></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="save-button">حفظ التغييرات</button>
+                <button type="button" class="cancel-button" onclick="history.back()">إلغاء</button>
+                <button type="button" class="delete-button" id="deleteButton">
+                    <i class="fas fa-trash"></i> حذف المقال
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        // Update back link
+        document.getElementById('backLink').href = `post.html?id=${postId}`;
+
+        window.onload = function() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+            const post = posts.find(p => p.id == postId);
+
+            if (post) {
+                document.getElementById('editTitle').value = post.title;
+                document.getElementById('editCategory').value = post.category;
+                document.getElementById('editAuthor').value = post.author;
+                document.getElementById('editImage').value = post.image;
+                document.getElementById('editContent').value = post.content;
+            } else {
+                alert('لم يتم العثور على المقال');
+                window.location.href = 'blog.html';
+            }
+        };
+
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+            const postIndex = posts.findIndex(p => p.id == postId);
+
+            if (postIndex !== -1) {
+                posts[postIndex] = {
+                    ...posts[postIndex],
+                    title: document.getElementById('editTitle').value,
+                    category: document.getElementById('editCategory').value,
+                    author: document.getElementById('editAuthor').value,
+                    image: document.getElementById('editImage').value,
+                    content: document.getElementById('editContent').value,
+                    lastModified: new Date().toISOString()
+                };
+
+                localStorage.setItem('blogPosts', JSON.stringify(posts));
+                alert('تم حفظ التغييرات بنجاح!');
+                window.location.href = `post.html?id=${postId}`;
+            }
+        });
+
+        // Add delete functionality
+        document.getElementById('deleteButton').addEventListener('click', function() {
+            if (confirm('هل أنت متأكد من حذف هذا المقال؟')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+                const postIndex = posts.findIndex(p => p.id == postId);
+
+                if (postIndex !== -1) {
+                    posts.splice(postIndex, 1);
+                    localStorage.setItem('blogPosts', JSON.stringify(posts));
+                    alert('تم حذف المقال بنجاح');
+                    window.location.href = 'blog.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

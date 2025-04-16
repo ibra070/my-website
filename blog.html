@@ -219,6 +219,12 @@
 </head>
 <body>
     <div class="blog-container">
+        <!-- Add back button -->
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            العودة للصفحة الرئيسية
+        </a>
+
         <header class="blog-header">
             <h1 class="blog-title">المدونة</h1>
             <p>مكان لمشاركة أفكاري وتجاربي</p>
@@ -341,7 +347,7 @@
                         </div>
                     </div>
                 </article>
-            `).join('');
+            `).join('');  // Remove the 'ض' character
         }
 
         // تحميل المقالات عند فتح الصفحة

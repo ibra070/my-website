@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Link Management System</title>
+    <!-- Add after meta tags -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -222,7 +224,13 @@
 </head>
 <body>
     <div class="container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
         <h1>Link Management System</h1>
+
         <form class="link-form" id="linkForm">
             <input type="text" id="titleInput" placeholder="Title" required>
             <input type="url" id="urlInput" placeholder="URL (https://...)" required>
@@ -231,9 +239,12 @@
             <button type="submit">Save Link</button>
         </form>
 
-        <select class="category-filter" id="categoryFilter">
-            <option value="">All Categories</option>
-        </select>
+        <div class="filters-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search links...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
 
         <div class="links-container" id="linksContainer"></div>
     </div>
@@ -242,30 +253,43 @@
         document.addEventListener('DOMContentLoaded', () => {
             const linkForm = document.getElementById('linkForm');
             const linksContainer = document.getElementById('linksContainer');
-            const categoryFilter = document.getElementById('categoryFilter');
-
-            // Load links from localStorage
+            const searchInput = document.getElementById('searchInput');
+            
             let links = JSON.parse(localStorage.getItem('links')) || [];
-
-            function updateCategoryFilter() {
-                const categories = [...new Set(links.map(link => link.category))];
-                categoryFilter.innerHTML = '<option value="">All Categories</option>';
-                categories.forEach(category => {
-                    if (category) {
-                        const option = document.createElement('option');
-                        option.value = category;
-                        option.textContent = category;
-                        categoryFilter.appendChild(option);
-                    }
-                });
+            
+            function saveLinks() {
+                localStorage.setItem('links', JSON.stringify(links));
             }
 
-            function renderLinks(filterCategory = '') {
-                linksContainer.innerHTML = '';
-                const filteredLinks = filterCategory 
-                    ? links.filter(link => link.category === filterCategory)
-                    : links;
+            function filterAndRenderLinks() {
+                let filteredLinks = [...links];
+                
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm) {
+                    filteredLinks = filteredLinks.filter(link => 
+                        link.title.toLowerCase().includes(searchTerm) ||
+                        link.url.toLowerCase().includes(searchTerm) ||
+                        link.description.toLowerCase().includes(searchTerm)
+                    );
+                }
 
+                renderLinks(filteredLinks);
+            }
+
+            function addNewLink(linkData) {
+                const newLink = {
+                    ...linkData,
+                    dateAdded: new Date().toISOString()
+                };
+                links.push(newLink);
+                saveLinks();
+                filterAndRenderLinks();
+            }
+
+            searchInput.addEventListener('input', filterAndRenderLinks);
+
+            function renderLinks(filteredLinks) {
+                linksContainer.innerHTML = '';
                 filteredLinks.forEach((link, index) => {
                     const linkCard = document.createElement('div');
                     linkCard.className = 'link-card';
@@ -274,20 +298,40 @@
                         <a href="${link.url}" class="link-url" target="_blank">${link.url}</a>
                         ${link.category ? `<div class="link-category">Category: ${link.category}</div>` : ''}
                         ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
+                        <div class="date-added">Added: ${new Date(link.dateAdded).toLocaleString()}</div>
                         <div class="card-buttons">
-                            <button class="edit-btn">Edit</button>
-                            <button class="delete-btn">Delete</button>
+                            <button class="copy-btn" title="Copy link">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </div>
                     `;
+
+                    // Add copy functionality
+                    const copyBtn = linkCard.querySelector('.copy-btn');
+                    copyBtn.addEventListener('click', () => {
+                        navigator.clipboard.writeText(link.url).then(() => {
+                            copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                            setTimeout(() => {
+                                copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                            }, 2000);
+                        });
+                    });
 
                     const deleteBtn = linkCard.querySelector('.delete-btn');
                     const editBtn = linkCard.querySelector('.edit-btn');
 
                     deleteBtn.addEventListener('click', () => {
                         if (confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
-                            links.splice(index, 1);
+                            // تعديل طريقة الحذف
+                            links = links.filter((_, i) => i !== index);
                             saveLinks();
-                            renderLinks(categoryFilter.value);
+                            filterAndRenderLinks(); // استخدام الدالة الصحيحة للعرض
                             updateCategoryFilter();
                         }
                     });
@@ -334,33 +378,23 @@
                 });
             }
 
-            function saveLinks() {
-                localStorage.setItem('links', JSON.stringify(links));
-            }
-
+            // Modify form submit to include date
             linkForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const newLink = {
                     title: document.getElementById('titleInput').value.trim(),
                     url: document.getElementById('urlInput').value.trim(),
                     category: document.getElementById('categoryInput').value.trim(),
-                    description: document.getElementById('descriptionInput').value.trim()
+                    description: document.getElementById('descriptionInput').value.trim(),
+                    dateAdded: new Date().toISOString()
                 };
 
-                links.push(newLink);
-                saveLinks();
-                renderLinks(categoryFilter.value);
-                updateCategoryFilter();
+                addNewLink(newLink);
                 linkForm.reset();
             });
 
-            categoryFilter.addEventListener('change', (e) => {
-                renderLinks(e.target.value);
-            });
-
-            // Initial render
-            updateCategoryFilter();
-            renderLinks();
+            // عرض الروابط عند تحميل الصفحة
+            filterAndRenderLinks();
         });
     </script>
 </body>

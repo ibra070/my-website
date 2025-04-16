@@ -1,61 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management System</title>
+    <title>نظام إدارة المهام</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #FFC107;
+            --success-color: #4CAF50;
+            --danger-color: #f44336;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
             padding: 20px;
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
         }
 
         .task-form {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
         .task-form input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .task-form input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
         }
 
         .task-form button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 15px 30px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
         }
 
         .task-form button:hover {
-            background-color: #45a049;
+            background-color: #1976D2;
+            transform: translateY(-2px);
         }
 
         .task-list {
@@ -65,16 +101,22 @@
         .task-item {
             display: flex;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .task-item:last-child {
-            border-bottom: none;
+        .task-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .task-item.completed {
-            background-color: #f8f8f8;
+            background-color: #f8f9fa;
+            opacity: 0.8;
         }
 
         .task-item.completed span {
@@ -83,35 +125,97 @@
         }
 
         .task-item input[type="checkbox"] {
-            margin-right: 10px;
+            margin-left: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
 
         .task-item span {
             flex: 1;
+            font-size: 1.1em;
         }
 
         .delete-btn {
-            padding: 5px 10px;
-            background-color: #ff4444;
+            padding: 8px 15px;
+            background-color: var(--danger-color);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .delete-btn:hover {
-            background-color: #cc0000;
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        .task-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+
+        .stat-item .number {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .stat-item .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .task-form {
+                flex-direction: column;
+            }
+
+            .task-stats {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Task Management System</h1>
+        <h1>نظام إدارة المهام</h1>
         <form class="task-form" id="taskForm">
-            <input type="text" id="taskInput" placeholder="Enter a new task" required>
-            <button type="submit">Add Task</button>
+            <input type="text" id="taskInput" placeholder="أدخل مهمة جديدة" required>
+            <button type="submit">إضافة مهمة <i class="fas fa-plus"></i></button>
         </form>
         <ul class="task-list" id="taskList"></ul>
+        <div class="task-stats">
+            <div class="stat-item">
+                <div class="number" id="totalTasks">0</div>
+                <div class="label">إجمالي المهام</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="completedTasks">0</div>
+                <div class="label">المهام المكتملة</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="pendingTasks">0</div>
+                <div class="label">المهام المعلقة</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -119,11 +223,22 @@
             const taskForm = document.getElementById('taskForm');
             const taskInput = document.getElementById('taskInput');
             const taskList = document.getElementById('taskList');
+            const totalTasksElement = document.getElementById('totalTasks');
+            const completedTasksElement = document.getElementById('completedTasks');
+            const pendingTasksElement = document.getElementById('pendingTasks');
 
-            // Load tasks from localStorage
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-            // Render tasks
+            function updateStats() {
+                const totalTasks = tasks.length;
+                const completedTasks = tasks.filter(task => task.completed).length;
+                const pendingTasks = totalTasks - completedTasks;
+
+                totalTasksElement.textContent = totalTasks;
+                completedTasksElement.textContent = completedTasks;
+                pendingTasksElement.textContent = pendingTasks;
+            }
+
             function renderTasks() {
                 taskList.innerHTML = '';
                 tasks.forEach((task, index) => {
@@ -132,35 +247,37 @@
                     li.innerHTML = `
                         <input type="checkbox" ${task.completed ? 'checked' : ''}>
                         <span>${task.text}</span>
-                        <button class="delete-btn">Delete</button>
+                        <button class="delete-btn"><i class="fas fa-trash"></i></button>
                     `;
 
-                    // Toggle completion
                     const checkbox = li.querySelector('input[type="checkbox"]');
                     checkbox.addEventListener('change', () => {
                         tasks[index].completed = checkbox.checked;
                         li.classList.toggle('completed');
                         saveTasks();
+                        updateStats();
                     });
 
-                    // Delete task
                     const deleteBtn = li.querySelector('.delete-btn');
                     deleteBtn.addEventListener('click', () => {
-                        tasks.splice(index, 1);
-                        renderTasks();
-                        saveTasks();
+                        li.classList.add('fade-out');
+                        setTimeout(() => {
+                            tasks.splice(index, 1);
+                            renderTasks();
+                            saveTasks();
+                            updateStats();
+                        }, 300);
                     });
 
                     taskList.appendChild(li);
                 });
+                updateStats();
             }
 
-            // Save tasks to localStorage
             function saveTasks() {
                 localStorage.setItem('tasks', JSON.stringify(tasks));
             }
 
-            // Add new task
             taskForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const taskText = taskInput.value.trim();
@@ -175,7 +292,6 @@
                 }
             });
 
-            // Initial render
             renderTasks();
         });
     </script>
