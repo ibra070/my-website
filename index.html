@@ -14,6 +14,8 @@
             --bg-color: #f1f5f9;
             --border-color: #ddd;
             --box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+            --nav-height: 70px;
+            --nav-bg: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
         }
 
         * {
@@ -123,38 +125,48 @@
         }
 
         .nav-links {
-            display: none;
+            display: none !important;
             position: fixed;
             top: 70px;
             right: 0;
             width: 100%;
+            height: auto;
             background: white;
             padding: 20px;
-            box-shadow: var(--box-shadow);
             flex-direction: column;
-            gap: 10px;
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
         }
 
         .nav-links.active {
-            display: flex;
+            display: flex !important;
         }
 
         .dropdown-menu {
-            position: static;
-            opacity: 1;
-            visibility: visible;
+            position: static !important;
+            display: none;
+            width: 100%;
+            background: var(--bg-color);
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transform: none !important;
             box-shadow: none;
-            margin-top: 10px;
         }
 
-        .social-links {
-            display: flex !important;
-            border: none;
-            justify-content: center;
-            margin: 15px 0;
-            padding: 15px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            margin: 10px 0;
+        }
+
+        .dropdown-menu a {
+            padding: 10px 15px;
+            display: block;
+            width: 100%;
+            text-align: right;
         }
     }
 </style>
@@ -162,147 +174,204 @@
 <!-- Add menu toggle button in navbar -->
 <nav class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="logo">Ibrahem Mok</a>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
+        <a href="index.html" class="logo">
+            <i class="fas fa-code"></i>
+            Ibrahem Mok
+        </a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        خدماتي 
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="life-goals.html">Life Goals</a></li>
+                        <li><a href="link-manager.html">Link Management</a></li>
+                        <li><a href="cmd-manager.html">Command Manager</a></li>
+                        <li><a href="Untitled-2.html">Task Management</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html">عني</a></li>
+                <li><a href="portfolio.html">أعمالي</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="#">خدماتي <i class="fas fa-chevron-down"></i></a>
-                <div class="dropdown-menu">
-                    <a href="life-goals.html">Life goals</a>
-                    <a href="link-manager.html">Link Management</a>
-                    <a href="cmd-manager.html">Command manager</a>
-                    <a href="Untitled-2.html">Task Management</a>
-                </div>
-            </li>
-            <li><a href="about.html">عني</a></li>
-            <li><a href="portfolio.html">أعمالي</a></li>
-            <li><a href="blog.html">المدونة</a></li>
-            <li><a href="contact.html">اتصل بي</a></li>
-            <li class="social-links">
-                <a href="https://github.com/ibra070" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.facebook.com/?locale=ar_AR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://wa.me/967778830856" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://t.me/ibrah_070" title="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="mailto:alnamisibrahem@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-            </li>
-            </li>
-        </ul>
     </div>
 </nav>
 
-<!-- Add JavaScript for mobile menu -->
-<!-- Add this right after your existing styles -->
 <style>
-    .mobile-menu-item {
+    .navbar {
+        background: white;
+        padding: 15px 0;
+        box-shadow: var(--box-shadow);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .nav-right {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        border-bottom: 1px solid var(--border-color);
     }
 
-    .mobile-menu-item i {
-        transition: transform 0.3s;
+    .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
 
-    .mobile-menu-item.active i {
-        transform: rotate(180deg);
-    }
-
-    .mobile-submenu {
-        display: none;
-        padding: 10px 20px;
-        background: var(--bg-color);
+    .nav-links a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 15px;
         border-radius: 6px;
+        transition: all 0.3s;
+        font-size: 1.1em;
     }
 
-    .mobile-submenu.active {
+    .nav-links a:hover {
+        background: var(--main-color);
+        color: white;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 50%;
+        transform: translateX(50%);
+        background: white;
+        padding: 8px 0;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
+        display: none;
+        min-width: 200px;
+        margin-top: 5px;
+        z-index: 1001;
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 15px;
+        font-size: 1em;
+        display: block;
+        white-space: nowrap;
+        color: var(--text-color);
+        transition: all 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+        background: var(--bg-color);
+        color: var(--main-color);
+    }
+
+    .dropdown:hover .dropdown-menu {
         display: block;
     }
 
-    .contact-buttons {
-        display: none;
-    }
-
     @media (max-width: 768px) {
-        .contact-buttons {
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            justify-content: space-around;
-            z-index: 1000;
-        }
-
-        .contact-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-
-        .contact-button i {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-            color: var(--main-color);
-        }
-
-        .main-content {
-            margin-bottom: 80px;
+        .dropdown-menu {
+            position: static;
+            box-shadow: none;
+            margin-top: 5px;
+            padding-right: 15px;
+            min-width: auto;
         }
     }
 </style>
 
-<!-- Add this before closing body tag -->
-<div class="contact-buttons">
-    <a href="tel:+967778830856" class="contact-button">
-        <i class="fas fa-phone"></i>
-        <span>اتصال</span>
-    </a>
-    <a href="https://wa.me/967778830856" class="contact-button">
-        <i class="fab fa-whatsapp"></i>
-        <span>واتساب</span>
-    </a>
-    <a href="mailto:alnamisibrahem@gmail.com" class="contact-button">
-        <i class="fas fa-envelope"></i>
-        <span>ايميل</span>
-    </a>
-    <a href="https://t.me/ibrah_070" class="contact-button">
-        <i class="fab fa-telegram"></i>
-        <span>تلجرام</span>
-    </a>
-</div>
+<style>
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-<!-- Update your mobile menu JavaScript -->
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-right: 20px;
+        padding-right: 20px;
+        border-right: 1px solid var(--border-color);
+    }
+
+    .social-links a {
+        color: var(--text-color);
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s;
+        font-size: 1.1em;
+    }
+
+    .social-links a:hover {
+        background: var(--main-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+
 <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
 
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        menuToggle.innerHTML = navLinks.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : 
-            '<i class="fas fa-bars"></i>';
-    });
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
 
-    // Add click handlers for mobile submenu toggles
-    document.querySelectorAll('.mobile-menu-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            item.classList.toggle('active');
-            const submenu = item.nextElementSibling;
-            if (submenu.classList.contains('mobile-submenu')) {
-                submenu.classList.toggle('active');
-            }
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.dropdown-toggle');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                }
+            });
         });
     });
 </script>
@@ -344,140 +413,389 @@
 
     <main class="main-content">
         <section class="hero-section">
-            <h1>مرحباً بك في صفحتي الشخصية</h1>
-            <p>مكان لمشاركة رحلتي، أهدافي، وإنجازاتي</p>
+            <div class="hero-content">
+                <div class="profile-image">
+                    <img src="assets/ibr.png" alt="3:14 Logo">
+                </div>
+                <h1>مرحباً، أنا إبراهيم</h1>
+                <p class="subtitle">مطور ومصمم مواقع متخصص</p>
+                <div class="typing-text">
+                    <span class="typed"></span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="portfolio.html" class="btn primary-btn">
+                        <i class="fas fa-briefcase"></i>
+                        معرض الأعمال
+                    </a>
+                    <a href="contact.html" class="btn secondary-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        تواصل معي
+                    </a>
+                </div>
+            </div>
+            
+            <div class="skills-showcase">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>تطوير الويب</h3>
+                    <p>تصميم وتطوير مواقع عصرية</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>تطبيقات الموبايل</h3>
+                    <p>تطوير تطبيقات ذكية</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>تصميم واجهات</h3>
+                    <p>تصاميم عصرية وجذابة</p>
+                </div>
+            </div>
         </section>
-        
-        <div id="content-container"></div>
     </main>
 
-    <script>
-        async function loadContent(page) {
-            try {
-                const response = await fetch(page);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                
-                // استخراج المحتوى من الصفحة المحملة
-                const mainContainer = tempDiv.querySelector('.main-container');
-                if (mainContainer) {
-                    document.getElementById('content-container').innerHTML = mainContainer.innerHTML;
-                    document.querySelector('.hero-section').style.display = 'none';
-                    document.querySelector('.back-button').style.display = 'block'; // Show back button
-                    
-                    // تنفيذ السكربتات
-                    const scripts = tempDiv.getElementsByTagName('script');
-                    for (let script of scripts) {
-                        eval(script.innerHTML);
-                    }
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل المحتوى:', error);
-                document.getElementById('content-container').innerHTML = 
-                    '<div style="text-align: center; color: red;">عذراً، حدث خطأ في تحميل المحتوى</div>';
-            }
-        }
-    </script>
     <style>
-        /* إضافة أنماط القائمة المنسدلة */
-        .dropdown-menu {
-            position: absolute;
-            background: white;
-            min-width: 200px;
-            box-shadow: var(--box-shadow);
-            border-radius: 6px;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-            top: 100%;
-            right: 0;
-        }
-
-        .nav-links li {
+        .hero-section {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            border-radius: 20px;
+            padding: 80px 30px;
+            margin: 20px;
             position: relative;
+            overflow: hidden;
         }
 
-        .nav-links li:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zM22.344 0L13.858 8.485 15.272 9.9l7.9-7.9h-.828zm5.656 0L19.515 8.485 17.343 10.657l7.9-7.9h2.757zm5.656 0l-6.485 6.485L25.515 8.14l7.9-7.9h-.714zm5.657 0l-4.243 4.242L33.414 5.656 41.313 0h-2.656zM22.342 0L41.9 19.556l-1.414 1.414L15.272 9.9 13.858 8.485 7.372 2H22.342zM55.456 0l-1.414 1.414L30.272 9.9l-1.414 1.414L19.515 0h35.94zM15.272 0l7.9 7.9-1.415 1.415-7.9-7.9h1.414zM41.313 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414zM24.97 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414zM38.556 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414zM28.284 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414zM35.728 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414zM31.516 0l-7.9 7.9 1.415 1.415 7.9-7.9h-1.414z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
-        .dropdown-menu a {
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-image img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
             display: block;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
         }
 
-        .dropdown-menu a:last-child {
-            border-bottom: none;
+        .profile-image:hover img {
+            transform: scale(1.1);
         }
-    </style>
 
-    <style>
+        .hero-content h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .typing-text {
+            min-height: 30px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            background: white;
+            color: var(--main-color);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .skills-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-icon i {
+            font-size: 1.8em;
+            color: white;
+        }
+
+        .skill-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .skill-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+        }
+
         @media (max-width: 768px) {
-            .nav-links {
-                height: calc(100vh - 70px);
-                overflow-y: auto;
+            .hero-section {
+                padding: 30px 15px;
+                margin: 10px;
             }
 
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                box-shadow: none;
-                margin: 5px 15px;
-                background: var(--bg-color);
-                border-radius: 6px;
-                display: block;
+            .hero-content h1 {
+                font-size: 1.8em;
             }
 
-            .nav-links li {
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
                 width: 100%;
+                max-width: 300px;
+                margin: 0 auto 30px;
             }
 
-            .nav-links li a {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            .btn {
                 width: 100%;
+                justify-content: center;
+                padding: 10px 20px;
             }
-        }
-    </style>
 
-    <style>
-        @media (max-width: 768px) {
-            .dropdown-menu {
+            .skills-showcase {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .skill-card {
+                padding: 20px;
+            }
+
+            .contact-buttons {
+                flex-direction: row;
+                flex-wrap: wrap;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                padding: 10px;
+                background: white;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .contact-button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+                min-width: auto;
+            }
+
+            .contact-button span {
                 display: none;
             }
 
-            .dropdown-menu.show {
-                display: block;
+            .contact-button i {
+                margin: 0;
+                font-size: 1.2em;
             }
 
-            .nav-links li a i.fa-chevron-down {
-                transition: transform 0.3s ease;
+            .main-content {
+                margin-top: 60px;
+                margin-bottom: 70px;
+                padding: 15px;
             }
 
-            .nav-links li a i.fa-chevron-down.rotated {
-                transform: rotate(180deg);
+            .nav-container {
+                padding: 0 10px;
+            }
+
+            .nav-links {
+                background: white;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: var(--box-shadow);
             }
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        // تحديث معالج النقر لقائمة الخدمات
-        document.querySelector('li a[href="#"]').addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                const icon = this.querySelector('i');
-                const dropdownMenu = this.nextElementSibling;
-                
-                icon.classList.toggle('rotated');
-                dropdownMenu.classList.toggle('show');
-            }
+        new Typed('.typed', {
+            strings: ['مطور مواقع', 'مصمم واجهات', 'مبرمج تطبيقات'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
         });
     </script>
+
+<!-- Social media contact buttons -->
+<div class="contact-buttons">
+    <a href="tel:+967778830856" class="contact-button">
+        <i class="fas fa-phone"></i>
+        <span>Call</span>
+    </a>
+    <a href="https://wa.me/967778830856" class="contact-button">
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+    </a>
+    <a href="mailto:alnamisibrahem@gmail.com" class="contact-button">
+        <i class="fas fa-envelope"></i>
+        <span>Email</span>
+    </a>
+    <a href="https://t.me/ibrah_070" class="contact-button">
+        <i class="fab fa-telegram"></i>
+        <span>Telegram</span>
+    </a>
+    <a href="https://github.com/ibra070" class="contact-button">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+    </a>
+    <a href="https://linkedin.com/in/YOUR_LINKEDIN_PROFILE" class="contact-button">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+    </a>
+    <a href="https://www.facebook.com/?locale=ar_AR" class="contact-button">
+        <i class="fab fa-facebook-f"></i>
+        <span>Facebook</span>
+    </a>
+</div>
+
+<style>
+    .contact-buttons {
+        position: fixed;
+        left: 15px;
+        bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 999;
+    }
+
+    .contact-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        color: var(--text-color);
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 25px;
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s ease;
+        font-size: 0.9em;
+    }
+
+    .contact-button i {
+        font-size: 1em;
+    }
+
+    .contact-button:hover {
+        transform: translateX(5px);
+        background: var(--main-color);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .contact-buttons {
+            flex-direction: row;
+            flex-wrap: wrap;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 8px;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .contact-button {
+            padding: 6px 12px;
+            font-size: 0.8em;
+        }
+
+        .main-content {
+            margin-bottom: 60px;
+        }
+    }
+</style>
+
