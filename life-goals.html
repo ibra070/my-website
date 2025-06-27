@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أهداف الحياة | أكاديمية الزيرو</title>
+    <title>أهداف الحياة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
     <style>
@@ -31,9 +31,38 @@
         }
 
         .main-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 40px auto;
             padding: 0 15px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border: 1px solid #e1e8ef;
+            border-radius: 8px;
+            color: #2c3e50;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateX(-2px);
+            background-color: #f8fafc;
+            color: #2ecc71;
+        }
+
+        .back-button i {
+            font-size: 1.5em;
         }
 
         .page-header {
@@ -247,6 +276,9 @@
 </head>
 <body>
     <div class="main-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
         <header class="page-header">
             <h1>أهداف الحياة</h1>
             <p>رحلة التطور والنجاح المستمر</p>
