@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدير أوامر </title>
+    <title>مدير أوامر</title>
     <style>
         * {
             margin: 0;
@@ -24,51 +24,7 @@
             text-align: center;
             color: #34495e;
             margin-bottom: 30px;
-            font-size: 2.5em;
-            font-weight: 600;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #34495e;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        input, textarea, select {
-            font-size: 1em;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        .command-text {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 1.1em;
-            line-height: 1.4;
-        }
-
-        .command-type {
-            font-size: 1em;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .command-description {
-            font-size: 1em;
-            line-height: 1.6;
-        }
-
-        button {
-            font-size: 1em;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .success-message {
-            font-size: 1.1em;
-            font-weight: 600;
+            font-size: 2.2em;
         }
 
         .container {
@@ -78,13 +34,6 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        h1 {
-            text-align: center;
-            color: #34495e;
-            margin-bottom: 30px;
-            font-size: 2.2em;
         }
 
         .form-group {
@@ -120,33 +69,16 @@
             resize: vertical;
         }
 
-        .command-form {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid #e1e8ef;
-        }
-
-        .filter-section {
-            margin-bottom: 25px;
-            padding: 15px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e1e8ef;
-        }
-
-        .filter-section select {
-            width: 200px;
-        }
-
-        .command-card {
+        .command-form, .filter-section, .command-card {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             border: 1px solid #e1e8ef;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .filter-section select {
+            width: 200px;
         }
 
         .command-type {
@@ -165,6 +97,7 @@
             border: 1px solid #e1e8ef;
             margin: 10px 0;
             direction: ltr;
+            overflow-x: auto;
         }
 
         .command-description {
@@ -172,50 +105,34 @@
             line-height: 1.5;
         }
 
-        button {
-            padding: 10px 20px;
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            padding: 6px 12px;
+            font-size: 0.85em;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
+            color: white;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
         }
 
-        .save-btn {
-            background-color: #3498db;
-            color: white;
-        }
+        .save-btn { background-color: #3498db; }
+        .save-btn:hover { background-color: #2980b9; }
 
-        .save-btn:hover {
-            background-color: #2980b9;
-        }
+        .copy-btn { background-color: #95a5a6; }
+        .copy-btn:hover { background-color: #7f8c8d; }
 
-        .copy-btn {
-            background-color: #95a5a6;
-            color: white;
-        }
+        .edit-btn { background-color: #2ecc71; }
+        .edit-btn:hover { background-color: #27ae60; }
 
-        .copy-btn:hover {
-            background-color: #7f8c8d;
-        }
-
-        .edit-btn {
-            background-color: #2ecc71;
-            color: white;
-        }
-
-        .edit-btn:hover {
-            background-color: #27ae60;
-        }
-
-        .delete-btn {
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        .delete-btn:hover {
-            background-color: #c0392b;
-        }
+        .delete-btn { background-color: #e74c3c; }
+        .delete-btn:hover { background-color: #c0392b; }
 
         .success-message {
             position: fixed;
@@ -229,13 +146,27 @@
             font-weight: 600;
             box-shadow: 0 2px 10px rgba(46, 204, 113, 0.2);
         }
-</style>
+
+        @media (max-width: 600px) {
+            .filter-section select {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button-group button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>مدير أوامر</h1>
         
-        <!-- إضافة قسم الفرز -->
         <div class="filter-section">
             <select id="filterType">
                 <option value="all">كل الأوامر</option>
@@ -279,15 +210,11 @@
             
             let commands = JSON.parse(localStorage.getItem('commands')) || [];
 
-            // إضافة مستمع حدث للفرز
-            filterType.addEventListener('change', () => {
-                renderCommands();
-            });
+            filterType.addEventListener('change', renderCommands);
 
             function renderCommands() {
                 commandList.innerHTML = '';
                 const selectedType = filterType.value;
-                
                 const filteredCommands = selectedType === 'all' 
                     ? commands 
                     : commands.filter(cmd => cmd.type === selectedType);
@@ -331,6 +258,7 @@
                             <div class="form-group">
                                 <select class="edit-type">
                                     <option value="cmd" ${cmd.type === 'cmd' ? 'selected' : ''}>CMD</option>
+                                    <option value="powershell" ${cmd.type === 'powershell' ? 'selected' : ''}>PowerShell</option>
                                     <option value="run" ${cmd.type === 'run' ? 'selected' : ''}>Run</option>
                                 </select>
                             </div>
@@ -363,9 +291,7 @@
                             }
                         });
 
-                        cancelBtn.addEventListener('click', () => {
-                            renderCommands();
-                        });
+                        cancelBtn.addEventListener('click', () => renderCommands());
                     });
 
                     commandList.appendChild(commandCard);
@@ -374,6 +300,11 @@
 
             function saveCommands() {
                 localStorage.setItem('commands', JSON.stringify(commands));
+            }
+
+            function showSuccessMessage() {
+                successMessage.style.display = 'block';
+                setTimeout(() => successMessage.style.display = 'none', 2000);
             }
 
             commandForm.addEventListener('submit', (e) => {
