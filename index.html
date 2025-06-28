@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>الصفحة الشخصية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
@@ -52,9 +53,70 @@
 
         .logo {
             color: var(--main-color);
-            font-size: 1.5em;
-            font-weight: bold;
+            font-size: 1.2em;
+            font-weight: 700;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            color: var(--primary-dark);
+            background: rgba(33, 147, 176, 0.1);
+        }
+
+        .logo i {
+            font-size: 1.6em;
+            transition: transform 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .logo:hover i {
+            transform: scale(1.1);
+        }
+
+        .logo span {
+            display: inline-block;
+            position: relative;
+            font-size: 1.2em;
+        }
+
+        .logo span::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .logo:hover span::after {
+            width: 100%;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover::before {
+            opacity: 0.1;
         }
 
         .nav-links {
@@ -70,11 +132,95 @@
             padding: 10px 15px;
             border-radius: 6px;
             transition: all 0.3s;
+            position: relative;
+            display: inline-block;
         }
 
         .nav-links a:hover {
-            background: var(--main-color);
-            color: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(-180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 50%;
+            transform: translateX(50%);
+            background: white;
+            padding: 8px 0;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            display: none;
+            min-width: 200px;
+            margin-top: 5px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+
+        .dropdown-menu a {
+            padding: 8px 15px;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--bg-color);
+            color: var(--primary-color);
+            transform: translateX(5px);
         }
 
         .main-content {
@@ -181,6 +327,7 @@
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about-me.html">عني</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">
                         خدماتي 
@@ -191,11 +338,18 @@
                         <li><a href="link-manager.html">Link Management</a></li>
                         <li><a href="cmd-manager.html">Command Manager</a></li>
                         <li><a href="Untitled-2.html">Task Management</a></li>
-                        <li><a href="timer.html">Time Management</a></li>
+                        <li><a href="time-management/index.html">Time Management</a></li>
                     </ul>
                 </li>
-                <li><a href="about.html">عني</a></li>
-                <li><a href="bank-website/login.html">أعمالي</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        أعمالي 
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="bank-website/login.html">نظام البنك</a></li>
+                    </ul>
+                </li>
                 <li><a href="blog.html">المدونة</a></li>
             </ul>
             <button class="menu-toggle">
@@ -424,14 +578,14 @@
                     <span class="typed"></span>
                 </div>
                 <div class="hero-buttons">
-                    <a href="portfolio.html" class="btn primary-btn">
+                    <a href="coming-soon.html" class="btn">
                         <i class="fas fa-briefcase"></i>
                         معرض الأعمال
                     </a>
-                    <a href="contact.html" class="btn secondary-btn">
+                    <div class="btn">
                         <i class="fas fa-paper-plane"></i>
                         تواصل معي
-                    </a>
+                    </div>
                 </div>
             </div>
             
@@ -460,6 +614,13 @@
             </div>
         </section>
     </main>
+
+    <!-- Portfolio Section -->
+    
+
+    
+
+   
 
     <style>
         .hero-section {
