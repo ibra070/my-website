@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عني - الصفحة الشخصية</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .personal-info {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-section {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border-radius: 30px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 30px 0;
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 30px 15px;
+            }
+
+            .personal-info {
+                padding: 20px;
+            }
+
+            .info-section {
+                padding: 15px;
+            }
+
+            .back-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <main>
+        <div class="about-container">
+            <div class="personal-info">
+                <div class="info-section">
+                    <h3>المعلومات الشخصية</h3>
+                    <p><strong>الاسم:</strong> إبراهيم مختار النامس</p>
+                    <p><strong>تاريخ الميلاد:</strong> 14 نوفمبر 2001</p>
+                    <p><strong>السكن:</strong> عدن، اليمن</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>التعليم</h3>
+                    <p><strong>الجامعة:</strong> جامعة عدن</p>
+                    <p><strong>الكلية:</strong> كلية الهندسة</p>
+                    <p><strong>التخصص:</strong> تقنية المعلومات (IT)</p>
+                    <p><strong>المسوى:</strong> الثالث</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>الطموحات</h3>
+                    <p>أطمح إلى تطوير مهاراتي في مجال تكنولوجيا المعلومات وتحقيق المزيد من التقدم في مسيرتي المهنية.</p>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                رجوع للرئيسية
+            </a>
+        </div>
+    </main>
+</body>
+</html>
