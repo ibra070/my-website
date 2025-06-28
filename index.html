@@ -156,19 +156,23 @@
             width: 100%;
         }
 
+        .dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
         .dropdown-toggle {
             display: flex;
             align-items: center;
             gap: 5px;
             cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
-        .dropdown-toggle i {
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle i {
-            transform: rotate(-180deg);
+        .dropdown-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .dropdown-menu {
@@ -176,7 +180,7 @@
             top: 100%;
             right: 0;
             background: white;
-            padding: 12px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             display: none;
@@ -186,7 +190,72 @@
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* تحسينات إضافية للانتقالات */
+        .dropdown-menu {
+            will-change: opacity, visibility, transform;
+            backface-visibility: hidden;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            border-width: 8px 8px 0 8px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        .dropdown-menu .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .dropdown-menu .close-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: rotate(90deg);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .dropdown-menu .close-btn i {
+            font-size: 1em;
+            color: #333;
+        }
+
+        /* إظهار زر الإغلاق فقط على الهاتف المحمول */
+        @media (max-width: 768px) {
+            .dropdown-menu .close-btn {
+                display: block;
+            }
+        }
+
+        /* إخفاء زر الإغلاق على الشاشات الكبيرة */
+        @media (min-width: 769px) {
+            .dropdown-menu .close-btn {
+                display: none;
+            }
         }
 
         .dropdown:hover .dropdown-menu {
@@ -332,38 +401,37 @@
         .theme-toggle {
             position: fixed;
             top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 9999;
-        }
 
-        .theme-toggle i {
-            color: var(--main-color);
-            font-size: 1.2em;
-            transition: transform 0.3s ease;
-        }
+            .dropdown-menu li {
+                margin: 8px 0;
+                transition: all 0.2s ease;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid white;
+            }
 
-        .theme-toggle:hover i {
-            transform: rotate(180deg);
-        }
+            .dropdown-menu a {
+                padding: 8px 15px;
+                font-size: 1em;
+                display: block;
+                white-space: nowrap;
+                color: var(--text-color);
+                transition: all 0.3s ease;
+            }
 
-        /* مؤشر الوضع الليلي */
-        .dark-mode {
-            background-color: #1a1a1a;
-            color: #ffffff;
-        }
+            .dropdown-menu a:hover {
+                background: var(--bg-color);
+                color: var(--primary-color);
+                transform: translateX(5px);
+            }
 
-        .dark-mode .navbar {
-            background: #2d2d2d;
-        }
+            .main-content {
+                margin-top: 80px;
+                padding: 40px 15px;
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
         .dark-mode .nav-links a {
             color: #ffffff;
@@ -435,28 +503,85 @@
             const dropdowns = document.querySelectorAll('.dropdown');
             
             dropdowns.forEach(dropdown => {
-                let timeout;
                 const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-                
-                dropdown.addEventListener('mouseenter', function() {
-                    clearTimeout(timeout);
-                    dropdownMenu.style.display = 'block';
-                    setTimeout(() => {
-                        dropdownMenu.style.opacity = '1';
-                        dropdownMenu.style.visibility = 'visible';
-                        dropdownMenu.style.transform = 'translateY(0)';
-                    }, 50);
-                });
-                
-                dropdown.addEventListener('mouseleave', function() {
-                    timeout = setTimeout(() => {
-                        dropdownMenu.style.opacity = '0';
-                        dropdownMenu.style.visibility = 'hidden';
-                        dropdownMenu.style.transform = 'translateY(10px)';
+                const closeBtn = dropdownMenu.querySelector('.close-btn');
+                let isOpen = false;
+
+                // فتح القائمة
+                dropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    isOpen = !isOpen;
+                    dropdownMenu.classList.toggle('active', isOpen);
+                    
+                    // تغيير اتجاه الأسهم
+                    const arrow = dropdown.querySelector('.fas');
+                    if (arrow) {
+                        arrow.style.transform = isOpen ? 'rotate(-180deg)' : 'rotate(0)';
+                    }
+
+                    // حظر التمرير في الخلفية
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+
+                    // تأخير قصير عند فتح القائمة
+                    if (isOpen) {
                         setTimeout(() => {
-                            dropdownMenu.style.display = 'none';
-                        }, 300);
-                    }, 150);
+                            dropdownMenu.style.opacity = '1';
+                            dropdownMenu.style.visibility = 'visible';
+                            dropdownMenu.style.transform = 'translateY(0)';
+                        }, 50);
+                    }
+                });
+
+                // إغلاق القائمة عند النقر خارجها
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target)) {
+                        isOpen = false;
+                        dropdownMenu.classList.remove('active');
+                        
+                        // إعادة تعيين اتجاه الأسهم
+                        const arrow = dropdown.querySelector('.fas');
+                        if (arrow) {
+                            arrow.style.transform = 'rotate(0)';
+                        }
+
+                        // السماح بالتمرير مرة أخرى
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // إضافة وظيفة زر الإغلاق
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        isOpen = false;
+                        dropdownMenu.classList.remove('active');
+                        
+                        // إعادة تعيين اتجاه الأسهم
+                        const arrow = dropdown.querySelector('.fas');
+                        if (arrow) {
+                            arrow.style.transform = 'rotate(0)';
+                        }
+
+                        // السماح بالتمرير مرة أخرى
+                        document.body.style.overflow = '';
+                    });
+                }
+
+                // إغلاق القائمة عند النقر على أي رابط
+                dropdownMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') {
+                        isOpen = false;
+                        dropdownMenu.classList.remove('active');
+                        
+                        // إعادة تعيين اتجاه الأسهم
+                        const arrow = dropdown.querySelector('.fas');
+                        if (arrow) {
+                            arrow.style.transform = 'rotate(0)';
+                        }
+
+                        // السماح بالتمرير مرة أخرى
+                        document.body.style.overflow = '';
+                    }
                 });
             });
         });
@@ -956,22 +1081,47 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 30px;
-            border-radius: 50px;
+            padding: 14px 35px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .primary-btn {
-            background: white;
-            color: var(--main-color);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .secondary-btn {
-            background: transparent;
-            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .btn:hover {
