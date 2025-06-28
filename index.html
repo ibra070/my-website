@@ -174,35 +174,41 @@
         .dropdown-menu {
             position: absolute;
             top: 100%;
-            right: 50%;
-            transform: translateX(50%);
+            right: 0;
             background: white;
-            padding: 8px 0;
-            border-radius: 8px;
-            box-shadow: var(--box-shadow);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             display: none;
-            min-width: 200px;
+            min-width: 220px;
             margin-top: 5px;
             z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .dropdown:hover .dropdown-menu {
             display: block;
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
         }
 
         .dropdown-menu::before {
             content: '';
             position: absolute;
-            top: -10px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 0;
-            height: 0;
+            top: -8px;
+            right: 20px;
+            border-width: 8px 8px 0 8px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        .dropdown-menu li {
+            margin: 8px 0;
+            transition: all 0.2s ease;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
             border-bottom: 10px solid white;
@@ -253,7 +259,208 @@
                 display: none;
             }
         }
+        /* مؤشر تقدم التحميل */
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--main-color);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        /* مؤشر التمرير */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 5px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 9999;
+        }
+
+        .scroll-indicator .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--main-color);
+            border-radius: 5px 5px 0 0;
+        }
+
+        /* زر العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 9999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top i {
+            color: var(--main-color);
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .back-to-top:hover i {
+            transform: translateY(-3px);
+        }
+
+        /* مؤشر الوضع الليلي/النهاري */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        .theme-toggle i {
+            color: var(--main-color);
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* مؤشر الوضع الليلي */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .dark-mode .navbar {
+            background: #2d2d2d;
+        }
+
+        .dark-mode .nav-links a {
+            color: #ffffff;
+        }
+
+        .dark-mode .nav-links a:hover {
+            color: var(--main-color);
+        }
+
+        .dark-mode .dropdown-menu {
+            background: #333;
+        }
+
+        .dark-mode .dropdown-menu a {
+            color: #ffffff;
+        }
+
+        .dark-mode .dropdown-menu a:hover {
+            background: #444;
+        }
+
+        /* مؤشر الزيارات */
+        .visit-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            z-index: 9999;
+        }
+
+        /* مؤشر الوقت */
+        .time-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            z-index: 9999;
+        }
+
+        /* مؤشر حالة الاتصال */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            z-index: 9999;
+        }
+
+        .connection-status.offline {
+            background: rgba(255, 0, 0, 0.8);
+        }
+
     </style>
+    <script>
+        // تحسينات القائمة المنسدلة
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            dropdowns.forEach(dropdown => {
+                let timeout;
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                
+                dropdown.addEventListener('mouseenter', function() {
+                    clearTimeout(timeout);
+                    dropdownMenu.style.display = 'block';
+                    setTimeout(() => {
+                        dropdownMenu.style.opacity = '1';
+                        dropdownMenu.style.visibility = 'visible';
+                        dropdownMenu.style.transform = 'translateY(0)';
+                    }, 50);
+                });
+                
+                dropdown.addEventListener('mouseleave', function() {
+                    timeout = setTimeout(() => {
+                        dropdownMenu.style.opacity = '0';
+                        dropdownMenu.style.visibility = 'hidden';
+                        dropdownMenu.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            dropdownMenu.style.display = 'none';
+                        }, 300);
+                    }, 150);
+                });
+            });
+        });
+    </script>
 </head>
 <style>
     /* Add mobile menu button */
